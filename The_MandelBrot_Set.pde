@@ -1,5 +1,8 @@
-float slope1 = 3.0/1000;
-float slope2 = -3.0/1000;
+float aMin = 0.2;  // -2
+float aMax = 1;  // 1  
+float bMin = 0.2;  // -1.5
+float bMax = 1;  // 1.5
+
 
 void setup() {
   size(1000, 1000);
@@ -8,6 +11,7 @@ void setup() {
   //ComplexNum z = new ComplexNum(6, 2); //represents 6 + 2i
   //ComplexNum w = new ComplexNum(4, 0); //represents 4
 }
+
 
 void draw() {
   for (int x=0; x<1000; ++x) {
@@ -20,11 +24,10 @@ void draw() {
       ComplexNum z = c;
       int row = 1;
       
-      //determine whether complex number a+bi is in the Mandelbrol or not 
+      //determine whether complex number a+bi is in the Mandelbrot or not 
       while (z.absoluteValue()<2.0 && row < 200) {
         //update z to z^2 + c
-        z = z.sqr();
-        z = z.add(c);
+        z = z.sqr().add(c);
         row++;
       }
       if (row == 200) {
@@ -36,10 +39,13 @@ void draw() {
   }
 }
 
+
 float get_a_value(int xPixel) {
-  return slope1*xPixel - 2;
+  float slope = abs(aMin-aMax)/width;
+  return slope*xPixel + aMin;
 }
 
 float get_b_value(int yPixel) {
-  return slope2*yPixel + 1.5;
+  float slope = -1*abs(bMin-bMax)/height;
+  return slope*yPixel + bMax;
 }
